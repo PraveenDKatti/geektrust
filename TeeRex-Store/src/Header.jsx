@@ -1,6 +1,6 @@
 import { IoCartOutline } from "react-icons/io5";
 import { Link } from 'react-router-dom'
-export default function Header() {
+export default function Header({cart}) {
     return (
         <div className="flex justify-between py-5 px-10 bg-gray-200 z-50 sticky w-full top-0">
             
@@ -15,7 +15,7 @@ export default function Header() {
                 <Link to='Cart'>
                     <div className="flex text-4xl">
                         <IoCartOutline />
-                        <sup className="text-sm font-bold">2</sup>
+                        <sup className="text-sm font-bold">{cart}</sup>
                     </div>
                 </Link>
             </div>
