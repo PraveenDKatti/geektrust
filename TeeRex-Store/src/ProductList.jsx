@@ -2,7 +2,7 @@ import Filter from './Filter'
 import Products from './Products'
 import { PiMagnifyingGlassBold } from "react-icons/pi";
 
-export default function ProductList() {
+export default function ProductList({addToCart}) {
     return (
         <div>
             <div className='flex justify-between mx-10 mt-5'>
@@ -25,7 +25,7 @@ export default function ProductList() {
                     <Filter />
                 </div>
                 <div className="w-3/4">
-                    <Products />
+                    <Products addToCart={addToCart} />
                 </div>
             </div>
 

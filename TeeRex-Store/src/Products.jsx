@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-export default function Products(){
+export default function Products({addToCart}){
     const [product, setProduct] = useState([])
 
     useEffect(()=>{
@@ -27,7 +27,7 @@ export default function Products(){
                         <div><img src={item.imageURL} alt={item.name} className="scale-85 hover:scale-100 w-full h-40 object-cover"/></div>
                         <div className="flex items-center mt-3 mx-1 w-[full] justify-between">
                             <p className="font-bold">Rs {item.price}</p>
-                            <button className=
+                            <button onClick={()=>addToCart(item)} className=
                             "p-2 bg-black text-sm text-white w-[max] rounded cursor-pointer">
                             Add to Cart</button>
                         </div>

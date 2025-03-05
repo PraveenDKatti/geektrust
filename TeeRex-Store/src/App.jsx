@@ -10,14 +10,21 @@ import Cart from './ShoppingCart'
 function App() {
   const [cart, setCart] = useState([])
 
+  function addToCart(product){
+    setCart((cart)=>[...cart, product])
+  }
+
+  function removeFromCart(product){
+    setCart((cart)=>cart.filter((item)=> item.id!==product.id))
+  }
 
   return (
     <>
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path='/' element={<ProductList/>} />
-          <Route path="/Cart" element={<Cart data={cartData} />} />
+          <Route path='/' element={<ProductList addToCart={addToCart} />} />
+          <Route path="/Cart" element={<Cart cart={cart} removeFromCart={removeFromCart} />} />
         </Routes>
       </BrowserRouter>
     </>
