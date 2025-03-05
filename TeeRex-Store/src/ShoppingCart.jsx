@@ -1,4 +1,15 @@
+import { useState, useEffect } from "react"
 export default function Cart({cart, removeFromCart}){
+    let [total, setTotal] = useState(0)
+    
+    useEffect(()=>{
+        function getTotal(){
+            total = cart.reduce((item)=>total+=item.rice,total)
+            setTotal(total)
+        }
+        getTotal()
+    },total)
+
     return (
         <div className="w-1/2 shadow-[0px_0px_4px_0.5px_rgba(0,0,0,0.1)] mx-10 mt-5 p-5">
             <div className="text-2xl font-semibold"><p>Shopping Cart</p></div>
@@ -20,7 +31,7 @@ export default function Cart({cart, removeFromCart}){
                 }
 
                 <hr/>
-                <div className="mt-5 flex justify-end"><span className="font-bold">Total Amount: <span className="font-normal">Rs. 1000</span></span></div>
+                <div className="mt-5 flex justify-end"><span className="font-bold">Total Amount: <span className="font-normal">Rs. {total}</span></span></div>
             </div>
         </div>
     )

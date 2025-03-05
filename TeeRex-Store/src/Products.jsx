@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect,useState } from "react"
 
 export default function Products({addToCart}){
     const [product, setProduct] = useState([])
