@@ -17,6 +17,7 @@ export default function Filter(){
                         </label>
                     </div>
                 </div>
+                <hr className="m-2 border-gray-300"/>
 
                 {/* Gender Filter */}
                 <div>
@@ -33,6 +34,7 @@ export default function Filter(){
                         </label>
                     </div>
                 </div>
+                <hr className="m-2 border-gray-300"/>
 
                 {/* Price Filter */}
                 <div>
@@ -49,7 +51,8 @@ export default function Filter(){
                         </label>
                     </div>
                 </div>
-
+                <hr className="m-2 border-gray-300"/>
+                
                 {/* Type Filter */}
                 <div>
                     <p className="font-bold mb-2">Type</p>
