@@ -3,12 +3,9 @@ export default function Cart({cart, removeFromCart}){
     let [total, setTotal] = useState(0)
     
     useEffect(()=>{
-        function getTotal(){
-            total = cart.reduce((item)=>total+=item.rice,total)
-            setTotal(total)
-        }
-        getTotal()
-    },total)
+        let newTotal = cart.reduce((acc,item)=>acc+=item.price,0)
+        setTotal(newTotal)
+    },[cart])
 
     return (
         <div className="w-1/2 shadow-[0px_0px_4px_0.5px_rgba(0,0,0,0.1)] mx-10 mt-5 p-5">
