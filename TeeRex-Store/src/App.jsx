@@ -1,4 +1,5 @@
 import './App.css'
+import { useState } from 'react'
 import {BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import Header from './Header'
@@ -7,14 +8,16 @@ import Cart from './ShoppingCart'
 
 
 function App() {
+  const [cart, setCart] = useState([])
+
 
   return (
     <>
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path='/' element={<ProductList />} />
-          <Route path="/Cart" element={<Cart />} />
+          <Route path='/' element={<ProductList/>} />
+          <Route path="/Cart" element={<Cart data={cartData} />} />
         </Routes>
       </BrowserRouter>
     </>
