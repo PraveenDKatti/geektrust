@@ -1,11 +1,11 @@
-export default function Cart({data}){
+export default function Cart(){
 
-    const products = data
+    const products = []
 
     return (
-        <div>
-            <div><p>Shopping Cart</p></div>
-            <div>
+        <div className="w-1/2 shadow-[0px_0px_4px_0.5px_rgba(0,0,0,0.1)] mx-10 mt-5 p-5">
+            <div className="text-2xl font-semibold"><p>Shopping Cart</p></div>
+            <div className="mt-10 ms-10 w-[90%]">
                 {
                     products.map((item)=>(
                         <div key={item.id} className="flex">
@@ -21,8 +21,9 @@ export default function Cart({data}){
                         </div>
                     ))
                 }
-                <hr />
-                <h1>Total Amount:  Rs.</h1>
+
+                <hr/>
+                <div className="mt-5 flex justify-end"><span className="font-bold">Total Amount: <span className="font-normal">Rs. 1000</span></span></div>
             </div>
         </div>
     )
