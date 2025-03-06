@@ -21,7 +21,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Header />
+        <Header cart={cart.length}/>
         <Routes>
           <Route path='/' element={<ProductList addToCart={addToCart} />} />
           <Route path="/Cart" element={<Cart cart={cart} removeFromCart={removeFromCart} />} />
