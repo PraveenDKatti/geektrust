@@ -1,6 +1,6 @@
 export default function Filter(){
     return (
-        <div className="p-5 shadow-[0px_0px_4px_0.5px_rgba(0,0,0,0.1)] w-3/4 bg-white">
+        <div className="p-5 shadow-[0px_0px_4px_0.5px_rgba(0,0,0,0.1)] w-full md:w-3/4 bg-white">
             <div className="space-y-4">
                 {/* Color Filter */}
                 <div>
