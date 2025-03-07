@@ -37,9 +37,9 @@ export default function Cart({ cart, removeFromCart }) {
                             </div>
                             <div className="w-1/3 flex gap-5 items-end">
                                 <select defaultValue="1" onChange={(e)=>getQuantity(e,item)}
-                                className="rounded bg-gray-200 hover:bg-gray-300 cursor-pointer py-1 px-2">
+                                className="rounded bg-gray-200 cursor-pointer py-1 px-3">
                                     {Array.from({length:10},(_,i)=>(
-                                        <option key={i+1} value={i+1}>Qty:{i+1}</option>
+                                        <option key={i+1} value={i+1}>{i+1}</option>
                                     ))}
                                 </select>
                                 <button onClick={() => removeFromCart(item)} className="rounded bg-gray-200 hover:bg-gray-300 cursor-pointer py-1 px-2">Delete</button>

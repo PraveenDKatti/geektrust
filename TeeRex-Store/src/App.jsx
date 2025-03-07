@@ -11,7 +11,6 @@ function App() {
   const [cart, setCart] = useState([])
 
   function addToCart(product){
-    if(cart.contains(product))
     setCart((cart)=>[...cart, product])
   }
 
