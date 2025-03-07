@@ -34,10 +34,10 @@ export default function ProductList({addToCart}) {
                 </div>
             </div>
             <div className="p-10 flex">
-                <div className="w-1/4">
+                <div className="hidden md:w-1/4">
                     <Filter />
                 </div>
-                <div className="w-3/4">
+                <div className="w-full md:w-3/4">
                     <Products searchTerm={searchTerm} addToCart={addToCart} />
                 </div>
             </div>
