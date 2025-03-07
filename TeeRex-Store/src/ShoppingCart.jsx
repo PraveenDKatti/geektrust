@@ -22,20 +22,20 @@ export default function Cart({ cart, removeFromCart }) {
 
 
     return (
-        <div className="w-1/2 shadow-[0px_0px_4px_0.5px_rgba(0,0,0,0.1)] mx-10 mt-5 p-5">
-            <div className="text-2xl font-semibold"><p>Shopping Cart</p></div>
-            <div className="mt-10 ms-10 w-[90%]">
+        <div className="w-[90vw] md:w-1/2 shadow-[0px_0px_4px_0.5px_rgba(0,0,0,0.1)] md:mx-10 md:mt-5 m-5 p-5">
+            <div className="text-xl md:text-2xl font-semibold"><p>Shopping Cart</p></div>
+            <div className="mt-5 md:mt-10 md:ms-10 md:w-[90%]">
                 {
                     cart.map((item) => (
-                        <div key={item.id} className="flex p-5 shadow-[0px_0px_4px_0.5px_rgba(0,0,0,0.1)] mb-5">
-                            <div className="flex gap-5 w-2/3">
+                        <div key={item.id} className="grid gap-5 md:flex p-5 shadow-[0px_0px_4px_0.5px_rgba(0,0,0,0.1)] mb-5">
+                            <div className="flex gap-5 md:w-2/3">
                                 <img className="w-20 h-20" src={item.imageURL} alt={item.name} />
                                 <div className="font-bold">
                                     <p>{item.name}</p>
                                     <p className="flex items-center"><MdCurrencyRupee className="inline-block"/>{item.price} * {quantity[item.id] || 1}</p>
                                 </div>
                             </div>
-                            <div className="w-1/3 flex gap-5 items-end">
+                            <div className="md:w-1/3 flex gap-5 justify-end md:items-end">
                                 <select defaultValue="1" onChange={(e)=>getQuantity(e,item)}
                                 className="rounded bg-gray-200 cursor-pointer py-1 px-3">
                                     {Array.from({length:10},(_,i)=>(

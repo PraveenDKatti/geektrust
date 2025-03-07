@@ -10,7 +10,7 @@ export default function ProductList({addToCart}) {
 
     return (
         <div>
-            <div className='flex justify-center m-[2%] lg:mx-10 lg:mt-5'>
+            <div className='flex justify-center mx-[2%] mt-[4%] lg:mx-10 lg:mt-5'>
                 <div className='flex items-center gap-2 lg:gap-5'>
                     <input 
                         type="search" 
