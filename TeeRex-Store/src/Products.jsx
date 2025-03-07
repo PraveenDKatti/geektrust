@@ -27,10 +27,10 @@ export default function Products({searchTerm,addToCart}){
         : product;
 
     return (
-        <div className="flex flex-wrap gap-7">
+        <div className="grid gap-5 md:flex md:flex-wrap md:gap-7">
             {
                 displayProducts.map((item) => (
-                    <div key={item.id} className="w-[30%] rounded p-4 shadow-[0px_0px_4px_0.5px_rgba(0,0,0,0.1)]">
+                    <div key={item.id} className="w-full md:w-[30%] rounded p-4 shadow-[0px_0px_4px_0.5px_rgba(0,0,0,0.1)]">
                         <div className="mb-5 font-bold"><p>{item.name}</p></div>
                         <div>
                             <img 

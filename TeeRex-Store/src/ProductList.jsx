@@ -33,7 +33,7 @@ export default function ProductList({addToCart}) {
                     </span>
                 </div>
             </div>
-            <div className="p-10 flex">
+            <div className="p-5 md:p-10 flex">
                 <div className="hidden md:w-1/4">
                     <Filter />
                 </div>
