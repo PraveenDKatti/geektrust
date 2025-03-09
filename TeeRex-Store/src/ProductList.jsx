@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Filter from './Filter'
 import Products from './Products'
 import Search from './Search';
@@ -6,8 +6,27 @@ import Search from './Search';
 export default function ProductList({ addToCart }) {
     const [searchTerm, setSearchTerm] = useState("")
     const [toggleFilter, setToggleFilter] = useState(new Set(["hidden", "md:hidden", "absolute", "right-0", "top-0", "z-40"]))
+    const [product, setProduct] = useState([])
 
-    function searchQuery(query){
+    useEffect(() => {
+        const getProduct = async () => {
+            try {
+                const data = await fetch('https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/catalogue.json');
+                if (!data.ok) {
+                    throw new Error("Error occurred: cannot fetch data");
+                } else {
+                    const products = await data.json();
+                    setProduct(products);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        getProduct()
+    }, [])
+
+
+    function searchQuery(query) {
         setSearchTerm(query)
     }
     function updateFilter() {
@@ -21,9 +40,9 @@ export default function ProductList({ addToCart }) {
     return (
         <div>
             <div>
-                <Search 
-                    updateFilter={updateFilter} 
-                    searchQuery={searchQuery}/>
+                <Search
+                    updateFilter={updateFilter}
+                    searchQuery={searchQuery} />
             </div>
             <div className='relative'>
                 <div className={filterClasses}>
@@ -35,7 +54,7 @@ export default function ProductList({ addToCart }) {
                     <Filter />
                 </div>
                 <div className="w-full md:w-3/4">
-                    <Products searchTerm={searchTerm} addToCart={addToCart} />
+                    <Products product={product} searchTerm={searchTerm} addToCart={addToCart} />
                 </div>
             </div>
 

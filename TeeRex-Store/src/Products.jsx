@@ -1,24 +1,4 @@
-import { useEffect,useState } from "react"
-
-export default function Products({searchTerm,addToCart}){
-    const [product, setProduct] = useState([])
-
-    useEffect(()=>{
-        const getProduct = async ()=>{
-            try {
-                const data = await fetch('https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/catalogue.json');
-                if (!data.ok) {
-                    throw new Error("Error occurred: cannot fetch data");
-                }else{
-                    const products = await data.json();
-                    setProduct(products);
-                }
-            } catch(error) {
-                console.error(error);
-            }
-        }
-        getProduct()
-    },[])
+export default function Products({product,searchTerm,addToCart}){
 
     const displayProducts = searchTerm
         ? product.filter((item) =>
