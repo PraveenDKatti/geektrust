@@ -29,9 +29,9 @@ export default function Cart({ cart, removeFromCart }) {
                     cart.map((item) => (
                         <div key={item.id} className="grid gap-5 md:flex p-5 shadow-[0px_0px_4px_0.5px_rgba(0,0,0,0.1)] mb-5">
                             <div className="flex gap-5 md:w-2/3">
-                                <img className="w-20 h-20" src={item.imageURL} alt={item.name} />
+                                <img className="w-20 h-20" src={item.image} alt={item.title} />
                                 <div className="font-bold">
-                                    <p>{item.name}</p>
+                                    <p>{item.title}</p>
                                     <p className="flex items-center"><MdCurrencyRupee className="inline-block"/>{item.price} * {quantity[item.id] || 1}</p>
                                 </div>
                             </div>

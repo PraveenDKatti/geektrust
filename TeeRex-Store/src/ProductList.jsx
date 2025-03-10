@@ -14,7 +14,7 @@ export default function ProductList({ addToCart }) {
     useEffect(() => {
         const getProduct = async () => {
             try {
-                const data = await fetch('https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/catalogue.json');
+                const data = await fetch('https://shopping-api-wk52.onrender.com/api/items');
                 if (!data.ok) {
                     throw new Error("Error occurred: cannot fetch data");
                 } else {

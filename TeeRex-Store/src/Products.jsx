@@ -12,11 +12,11 @@ export default function Products({productList,searchTerm,addToCart}){
                 {
                     displayProducts.map((item) => (
                         <div key={item.id} className="w-full md:w-[30%] rounded p-4 shadow-[0px_0px_4px_0.5px_rgba(0,0,0,0.1)]">
-                            <div className="mb-1 md:mb-5 font-bold"><p>{item.name}</p></div>
+                            <div className="mb-1 md:mb-5 font-bold"><p>{item.title}</p></div>
                             <div>
                                 <img 
-                                    src={item.imageURL} 
-                                    alt={item.name} 
+                                    src={item.image} 
+                                    alt={item.title} 
                                     className="scale-85 hover:scale-100 w-full h-40 object-cover"
                                 />
                             </div>
