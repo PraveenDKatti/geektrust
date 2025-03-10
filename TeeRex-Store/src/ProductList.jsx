@@ -7,8 +7,9 @@ import { RxDividerVertical } from "react-icons/rx";
 
 export default function ProductList({ addToCart }) {
     const [searchTerm, setSearchTerm] = useState("")
-    const [toggleFilter, setToggleFilter] = useState(new Set(["hidden", "md:hidden", "absolute", "left-0", "top-0", "z-40","h-60", "overflow-auto"]))
+    const [toggleFilter, setToggleFilter] = useState(new Set(["hidden", "md:hidden", "absolute", "left-0", "top-0", "z-40", "h-60", "overflow-auto"]))
     const [product, setProduct] = useState([])
+    const [filters, setFilters] = useState([])
 
     useEffect(() => {
         const getProduct = async () => {
@@ -27,16 +28,34 @@ export default function ProductList({ addToCart }) {
         getProduct()
     }, [])
 
+    function triggerFilter(fetchFilter) {
+        let selectedFilter = Array.from(fetchFilter).map((value)=>JSON.parse(value))
+        let newProducts = product.filter((item) => {
+            let itemValues = Object.values(item)
+            return selectedFilter.every((value) => {
+                if (Array.isArray(value)) {
+                    const minPrice = value[0]
+                    const maxPrice = value[1] ?? Infinity;
+                    return item.price >= minPrice && item.price <= maxPrice
+                }
+                return itemValues.includes(value)
+            })
+        })
+        console.log(newProducts)
+        setFilters(newProducts)
+    }
 
     function triggerSearch(query) {
         setSearchTerm(query)
     }
+
     function updateFilter() {
         const newToggleFilter = new Set(toggleFilter)
         newToggleFilter.has("hidden") ? newToggleFilter.delete("hidden") : newToggleFilter.add("hidden")
         setToggleFilter(newToggleFilter)
     }
 
+    let productList = filters.length>0 && filters.length<product.length ? filters : product 
     const filterClasses = Array.from(toggleFilter).join(" ")
 
     return (
@@ -52,7 +71,7 @@ export default function ProductList({ addToCart }) {
                         Filter
                         <FiFilter className='text-gray-400 text-2xl' />
                     </span>
-                    <RxDividerVertical className='text-gray-400 text-3xl'/>
+                    <RxDividerVertical className='text-gray-400 text-3xl' />
                     <span className='w-1/2 h-full flex items-center justify-center'>
                         <select>
                             <option value="" selected disabled>Sort</option>
@@ -63,16 +82,16 @@ export default function ProductList({ addToCart }) {
                 </div>
                 <div className='relative'>
                     <div className={filterClasses}>
-                        <Filter />
+                        <Filter triggerFilter={triggerFilter} />
                     </div>
                 </div>
             </div>
             <div className="p-5 md:p-10 flex">
                 <div className="hidden md:block md:w-1/4">
-                    <Filter />
+                    <Filter triggerFilter={triggerFilter} />
                 </div>
                 <div className="w-full md:w-3/4">
-                    <Products product={product} searchTerm={searchTerm} addToCart={addToCart} />
+                    <Products productList={productList} searchTerm={searchTerm} addToCart={addToCart} />
                 </div>
             </div>
 

@@ -1,10 +1,10 @@
-export default function Products({product,searchTerm,addToCart}){
+export default function Products({productList,searchTerm,addToCart}){
 
     const displayProducts = searchTerm
-        ? product.filter((item) =>
+        ? productList.filter((item) =>
               item.name.toLowerCase().includes(searchTerm.toLowerCase())
           )
-        : product;
+        : productList;
 
     if(displayProducts && displayProducts.length!==0){
         return (
