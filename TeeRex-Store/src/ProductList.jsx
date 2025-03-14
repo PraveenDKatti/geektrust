@@ -35,15 +35,24 @@ export default function ProductList({ addToCart }) {
     }, []);
 
     function handleFilters(e, value, key) {
-        setFilters((prevFilters) => {
+        setFilters((prevFilters)=>{
             const newFilters = { ...prevFilters };
             if (e.target.checked) {
-                newFilters[key] = [...newFilters[key], value];
+                // Check if the array (value) is already included, avoiding duplicates
+                const isAlreadyIncluded = newFilters[key].some(
+                    (arr) => JSON.stringify(arr) === JSON.stringify(value)
+                );
+                if (!isAlreadyIncluded) {
+                    newFilters[key] = [...newFilters[key], value]; //actually this line is enough for other filters except price
+                }
             } else {
-                newFilters[key] = newFilters[key].filter((item) => item !== value);
+                // If unchecked, remove the array (value) from the key
+                newFilters[key] = newFilters[key].filter(
+                    (arr) => JSON.stringify(arr) !== JSON.stringify(value)
+                );
             }
-            return newFilters;
-        });
+            return newFilters
+        }); 
     }
 
     function triggerFilter() {
@@ -62,7 +71,6 @@ export default function ProductList({ addToCart }) {
                 return true;
             });
         });
-        console.log(filteredProducts)
         return filteredProducts;
     }
 
