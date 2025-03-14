@@ -1,15 +1,21 @@
 import { useState, useEffect } from 'react';
-import Filter from './Filter'
-import Products from './Products'
+import Filter from './Filter';
+import Products from './Products';
 import Search from './Search';
 import { FiFilter } from "react-icons/fi";
 import { RxDividerVertical } from "react-icons/rx";
 
 export default function ProductList({ addToCart }) {
-    const [searchTerm, setSearchTerm] = useState("")
-    const [toggleFilter, setToggleFilter] = useState(new Set(["hidden", "md:hidden", "absolute", "left-0", "top-0", "z-40", "h-60", "overflow-auto"]))
-    const [product, setProduct] = useState([])
-    const [filters, setFilters] = useState([])
+    const [searchTerm, setSearchTerm] = useState("");
+    const [toggleFilter, setToggleFilter] = useState(new Set(["hidden", "md:hidden", "absolute", "left-0", "top-0", "z-40", "h-60", "overflow-auto"]));
+    const [product, setProduct] = useState([]);
+    const [filters, setFilters] = useState({
+        category: [],
+        gender: [],
+        brand: [],
+        color: [],
+        price: []
+    });
 
     useEffect(() => {
         const getProduct = async () => {
@@ -24,39 +30,56 @@ export default function ProductList({ addToCart }) {
             } catch (error) {
                 console.error(error);
             }
-        }
-        getProduct()
-    }, [])
+        };
+        getProduct();
+    }, []);
 
-    function triggerFilter(fetchFilter) {
-        let selectedFilter = Array.from(fetchFilter).map((value)=>JSON.parse(value))
-        let newProducts = product.filter((item) => {
-            let itemValues = Object.values(item)
-            return selectedFilter.every((value) => {
-                if (Array.isArray(value)) {
-                    const minPrice = value[0]
-                    const maxPrice = value[1] ?? Infinity;
-                    return item.price >= minPrice && item.price <= maxPrice
-                }
-                return itemValues.includes(value)
-            })
-        })
-        console.log(newProducts)
-        setFilters(newProducts)
+    function handleFilters(e, value, key) {
+        setFilters((prevFilters) => {
+            const newFilters = { ...prevFilters };
+            if (e.target.checked) {
+                newFilters[key] = [...newFilters[key], value];
+            } else {
+                newFilters[key] = newFilters[key].filter((item) => item !== value);
+            }
+            return newFilters;
+        });
     }
 
+    function triggerFilter() {
+        let filteredProducts = product.filter((item) => {
+            // Filter based on the selected filters
+            return Object.keys(filters).every((key) => {
+                if (filters[key].length > 0) {
+                    if (key === "price") {
+                        return filters[key].some((range) => {
+                            const [minPrice, maxPrice] = range;
+                            return item[key] >= minPrice && item[key] <= (maxPrice ?? Infinity);
+                        });
+                    }
+                    return filters[key].includes(item[key].toLowerCase());
+                }
+                return true;
+            });
+        });
+        console.log(filteredProducts)
+        return filteredProducts;
+    }
+
+    let productList = triggerFilter();
+    const filterClasses = Array.from(toggleFilter).join(" ");
+
     function triggerSearch(query) {
-        setSearchTerm(query)
+        setSearchTerm(query);
     }
 
     function updateFilter() {
-        const newToggleFilter = new Set(toggleFilter)
-        newToggleFilter.has("hidden") ? newToggleFilter.delete("hidden") : newToggleFilter.add("hidden")
-        setToggleFilter(newToggleFilter)
+        setToggleFilter((prevToggleFilter) => {
+            const newToggleFilter = new Set(prevToggleFilter);
+            newToggleFilter.has("hidden") ? newToggleFilter.delete("hidden") : newToggleFilter.add("hidden");
+            return newToggleFilter;
+        });
     }
-
-    let productList = filters.length>0 && filters.length<product.length ? filters : product 
-    const filterClasses = Array.from(toggleFilter).join(" ")
 
     return (
         <div>
@@ -73,8 +96,8 @@ export default function ProductList({ addToCart }) {
                     </span>
                     <RxDividerVertical className='text-gray-400 text-3xl' />
                     <span className='w-1/2 h-full flex items-center justify-center'>
-                        <select>
-                            <option value="" selected disabled>Sort</option>
+                        <select defaultValue="">
+                            <option value="" disabled>Sort</option>
                             <option value="price-low">Low to High</option>
                             <option value="price-high">High to Low</option>
                         </select>
@@ -82,19 +105,18 @@ export default function ProductList({ addToCart }) {
                 </div>
                 <div className='relative'>
                     <div className={filterClasses}>
-                        <Filter triggerFilter={triggerFilter} />
+                        <Filter handleFilters={handleFilters} />
                     </div>
                 </div>
             </div>
             <div className="p-5 md:p-10 flex">
                 <div className="hidden md:block md:w-1/4">
-                    <Filter triggerFilter={triggerFilter} />
+                    <Filter handleFilters={handleFilters} />
                 </div>
                 <div className="w-full md:w-3/4">
                     <Products productList={productList} searchTerm={searchTerm} addToCart={addToCart} />
                 </div>
             </div>
-
         </div>
-    )
+    );
 }

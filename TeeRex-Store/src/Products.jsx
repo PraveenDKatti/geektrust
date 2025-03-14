@@ -2,7 +2,7 @@ export default function Products({productList,searchTerm,addToCart}){
 
     const displayProducts = searchTerm
         ? productList.filter((item) =>
-              item.name.toLowerCase().includes(searchTerm.toLowerCase())
+              item.title.toLowerCase().includes(searchTerm.toLowerCase())
           )
         : productList;
 
