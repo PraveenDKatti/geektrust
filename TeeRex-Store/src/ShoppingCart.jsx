@@ -1,24 +1,14 @@
 import { useState, useEffect } from "react"
 import { MdCurrencyRupee } from "react-icons/md";
 
-export default function Cart({ cart, removeFromCart }) {
+export default function Cart({ cart, quantity, getQuantity, removeFromCart }) {
     let [total, setTotal] = useState(0)
-    let [quantity, setQuantity] = useState({})
     
     useEffect(() => {
-        let newTotal = cart.reduce((acc, item) => acc + (quantity[item.id] || 1) * item.price, 0)
+        let newCart = Array.from(cart.values())
+        let newTotal = newCart.reduce((acc, item) => acc + (quantity[item.id] || 1) * item.price, 0)
         setTotal(newTotal)
     }, [cart,quantity])
-
-
-    function getQuantity(e,item){
-        if(e.target.value>item.quantity){
-            throw new Error("maximum quntity reached")
-        }else{
-            let totalProductQuantity = Number(e.target.value)
-            setQuantity(prev => ({ ...prev, [item.id]: totalProductQuantity }))
-        }
-    }
 
 
     return (
@@ -26,7 +16,7 @@ export default function Cart({ cart, removeFromCart }) {
             <div className="text-xl md:text-2xl font-semibold"><p>Shopping Cart</p></div>
             <div className="mt-5 md:mt-10 md:ms-10 md:w-[90%]">
                 {
-                    cart.map((item) => (
+                    Array.from(cart.values()).map((item) => (
                         <div key={item.id} className="grid gap-5 md:flex p-5 shadow-[0px_0px_4px_0.5px_rgba(0,0,0,0.1)] mb-5">
                             <div className="flex gap-5 md:w-2/3">
                                 <img className="w-20 h-20" src={item.image} alt={item.title} />
@@ -36,12 +26,11 @@ export default function Cart({ cart, removeFromCart }) {
                                 </div>
                             </div>
                             <div className="md:w-1/3 flex gap-5 justify-end md:items-end">
-                                <select defaultValue="1" onChange={(e)=>getQuantity(e,item)}
-                                className="rounded bg-gray-200 cursor-pointer py-1 px-3">
-                                    {Array.from({length:10},(_,i)=>(
-                                        <option key={i+1} value={i+1}>{i+1}</option>
-                                    ))}
-                                </select>
+                                <div className="flex gap-2 w-1/2">
+                                    <label className="text-center text-sm rounded bg-gray-200 cursor-pointer py-1 w-2/5" onClick={()=>getQuantity(-1,item)}>➖</label>
+                                        <label>{quantity[item.id] || 1}</label>
+                                    <label className="text-center text-sm rounded bg-gray-200 cursor-pointer py-1 w-2/5" onClick={()=>getQuantity(1,item)}>➕</label>
+                                </div>
                                 <button onClick={() => removeFromCart(item)} className="rounded bg-gray-200 hover:bg-gray-300 cursor-pointer py-1 px-2">Delete</button>
                             </div>
                         </div>
