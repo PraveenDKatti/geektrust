@@ -1,14 +1,19 @@
 import './App.css'
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-
-import Header from './Header'
-import ProductList from './ProductList'
-import Cart from './ShoppingCart'
+import ScrollToTop from "./utility/ScrollToTop";
+import Layout from './Layout'
+import ProductList from "./pages/ProductList"
+import Cart from './pages/ShoppingCart'
+import Home from './pages/Home'
+import ProductDetails from './pages/ProductDetails'
+import {filters} from './components/Filter'
 
 function App() {
+  const [searchTerm, setSearchTerm] = useState("")
   const [cart, setCart] = useState(new Map());
   const [quantity, setQuantity] = useState({});
+  const [category, setCategory] = useState(null);
 
   function getQuantity(value, item) {
     setQuantity(prevQuantity => {
@@ -54,13 +59,25 @@ function App() {
     });
   }
 
+  function getCategory(newCategory){
+    setCategory(newCategory)
+  };
+
+  function handleSearch(query) {
+    setSearchTerm(query);
+  }
+
   return (
     <BrowserRouter>
-      <Header cart={cart.size} />
-      <Routes>
-        <Route path='/' element={<ProductList addToCart={addToCart} />} />
-        <Route path='/Cart' element={<Cart cart={cart} quantity={quantity} getQuantity={getQuantity} removeFromCart={removeFromCart} />} />
-      </Routes>
+      <ScrollToTop />
+      <Layout cartSize={cart.size} searchTerm={searchTerm} triggerSearch={handleSearch}>
+        <Routes>
+          <Route path='/' element={<Home filters={filters} getCategory={getCategory} />} />
+          <Route path='/ProductList' element={<ProductList filters={filters} searchTerm={searchTerm} triggerSearch={handleSearch} category={category} addToCart={addToCart} />} />
+          <Route path="Product/:productId" element={<ProductDetails cart={cart} addToCart={addToCart} quantity={quantity} getQuantity={getQuantity}/>} />
+          <Route path='/Cart' element={<Cart cart={cart} quantity={quantity} getQuantity={getQuantity} removeFromCart={removeFromCart} />} />
+        </Routes>
+      </Layout>
     </BrowserRouter>
   );
 }

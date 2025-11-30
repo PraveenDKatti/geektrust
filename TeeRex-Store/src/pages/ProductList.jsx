@@ -1,21 +1,17 @@
 import { useState, useEffect } from 'react';
-import Filter from './Filter';
-import Products from './Products';
-import Search from './Search';
+import Filter from '../components/Filter';
+import Products from '../components/Products';
+import Search from '../components/Search';
 import { FiFilter } from "react-icons/fi";
 import { RxDividerVertical } from "react-icons/rx";
 
-export default function ProductList({ addToCart }) {
+export default function ProductList({ filters, category, addToCart, triggerSearch }) {
+    const categorizedFilters = Object.keys({...filters[category]}).map(key=>[key,[]])
+
     const [searchTerm, setSearchTerm] = useState("");
     const [toggleFilter, setToggleFilter] = useState(new Set(["hidden", "md:hidden", "absolute", "left-0", "top-0", "z-40", "h-60", "overflow-auto"]));
     const [product, setProduct] = useState([]);
-    const [filters, setFilters] = useState({
-        category: [],
-        gender: [],
-        brand: [],
-        color: [],
-        price: []
-    });
+    const [filter, setFilter] = useState({...Object.fromEntries(categorizedFilters),price:[]});
 
     useEffect(() => {
         const getProduct = async () => {
@@ -28,14 +24,14 @@ export default function ProductList({ addToCart }) {
                     setProduct(products);
                 }
             } catch (error) {
-                console.error(error);
+                console.log(error);
             }
         };
         getProduct();
     }, []);
 
     function handleFilters(e, value, key) {
-        setFilters((prevFilters)=>{
+        setFilter((prevFilters)=>{
             const newFilters = { ...prevFilters };
             if (e.target.checked) {
                 // Check if the array (value) is already included, avoiding duplicates
@@ -58,15 +54,18 @@ export default function ProductList({ addToCart }) {
     function triggerFilter() {
         let filteredProducts = product.filter((item) => {
             // Filter based on the selected filters
-            return Object.keys(filters).every((key) => {
-                if (filters[key].length > 0) {
+            return Object.keys(filter).every((key) => {
+                if (filter[key].length > 0) {
                     if (key === "price") {
-                        return filters[key].some((range) => {
+                        return filter[key].some((range) => {
                             const [minPrice, maxPrice] = range;
                             return item[key] >= minPrice && item[key] <= (maxPrice ?? Infinity);
                         });
+                    }else if(key === "category"){
+                        const allCategories = Object.values(item[key]).map(i=>i.toLowerCase())
+                        return filter[key].some((i)=>allCategories.includes(i));
                     }
-                    return filters[key].includes(item[key].toLowerCase());
+                    return filter[key].includes(item[key].toLowerCase());
                 }
                 return true;
             });
@@ -90,12 +89,7 @@ export default function ProductList({ addToCart }) {
     }
 
     return (
-        <div>
-            <div>
-                <Search
-                    updateFilter={updateFilter}
-                    triggerSearch={triggerSearch} />
-            </div>
+        <div className='productDetails px-4'>
             <div>
                 <div className='md:hidden h-10 flex items-center m-[2%] rounded bg-gray-100'>
                     <span onClick={updateFilter} className='h-full flex gap-2 items-center justify-center w-1/2 cursor-pointer'>
@@ -119,7 +113,7 @@ export default function ProductList({ addToCart }) {
             </div>
             <div className="p-5 md:p-10 flex">
                 <div className="hidden md:block md:w-1/4">
-                    <Filter handleFilters={handleFilters} />
+                    <Filter category={category} handleFilters={handleFilters} />
                 </div>
                 <div className="w-full md:w-3/4">
                     <Products productList={productList} searchTerm={searchTerm} addToCart={addToCart} />
