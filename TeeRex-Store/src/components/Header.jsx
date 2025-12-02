@@ -12,7 +12,7 @@ const navgLink = {
 export default function Header({ cartSize, searchTerm, triggerSearch }) {
     return (
         // Sticky, white background, shadow for lift, subtle border-b for separation
-        <header className="flex flex-col md:flex-row items-center justify-between bg-white px-6 md:px-10 py-3 md:py-4 z-50 sticky w-full top-0 shadow-md border-b border-gray-100">
+        <header className="flex flex-row items-center justify-between bg-white px-6 md:px-10 py-3 md:py-4 z-50 sticky w-full top-0 shadow-md border-b border-gray-100">
             
             {/* 1. Logo/Brand Name (Left) */}
             <div className="mb-3 md:mb-0 w-auto">
@@ -23,7 +23,7 @@ export default function Header({ cartSize, searchTerm, triggerSearch }) {
             </div>
             
             {/* 2. Search Bar (Center) - Removed gradient and set a max width */}
-            <div className="w-full max-w-lg mx-auto mb-3 md:mb-0"> 
+            <div className="hidden md:block w-full max-w-lg mx-auto mb-3 md:mb-0"> 
                 <Search triggerSearch={triggerSearch} 
                     searchTerm={searchTerm}/>
             </div>

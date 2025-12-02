@@ -8,8 +8,10 @@ import Cart from './pages/ShoppingCart'
 import Home from './pages/Home'
 import ProductDetails from './pages/ProductDetails'
 import {filters} from './components/Filter'
+import Signin from './pages/account/Signin';
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(null)
   const [searchTerm, setSearchTerm] = useState("")
   const [cart, setCart] = useState(new Map());
   const [quantity, setQuantity] = useState({});
@@ -67,12 +69,21 @@ function App() {
     setSearchTerm(query);
   }
 
+  function handleSignin(userData){
+    setCurrentUser(userData)
+  }
+
+  function handleSignout(){
+    setCurrentUser(null)
+  }
+
   return (
     <BrowserRouter>
       <ScrollToTop />
       <Layout cartSize={cart.size} searchTerm={searchTerm} triggerSearch={handleSearch}>
         <Routes>
-          <Route path='/' element={<Home filters={filters} getCategory={getCategory} />} />
+          <Route path='/Signin' element={<Signin handleSignin={handleSignin}/>} />
+          <Route path='/' element={<Home filters={filters} getCategory={getCategory} currentUser={currentUser} handleSignout={handleSignout}/>} />
           <Route path='/ProductList' element={<ProductList filters={filters} searchTerm={searchTerm} triggerSearch={handleSearch} category={category} addToCart={addToCart} />} />
           <Route path="Product/:productId" element={<ProductDetails cart={cart} addToCart={addToCart} quantity={quantity} getQuantity={getQuantity}/>} />
           <Route path='/Cart' element={<Cart cart={cart} quantity={quantity} getQuantity={getQuantity} removeFromCart={removeFromCart} />} />
