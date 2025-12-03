@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import imageUrls from '../utility/imageData'
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
 
 const images = imageUrls
 
 export default function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const swiperRef = useRef(null);
 
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
@@ -72,7 +74,10 @@ export default function App() {
       {/*Slider for small screens*/}
       <div className="md:hidden h-full">
         <Swiper
-          className="md:hidden"
+          modules={[Autoplay]}
+          onSwiper={(swiper) => (swiperRef.current = swiper)}
+          onSlideChange={(swiper) => setCurrentIndex(swiper.realIndex)}
+          className="md:hidden h-full"
           spaceBetween={0}
           slidesPerView={1}
           loop={true}
@@ -89,11 +94,11 @@ export default function App() {
             </SwiperSlide>
           ))}
           {/* Bullets */}
-          <div className="absolute bottom-3 w-full flex justify-center gap-2">
+          <div className="absolute z-50 bottom-3 w-full flex justify-center gap-2">
             {images.map((_, index) => (
               <button
                 key={index}
-                onClick={() => goToSlide(index)}
+                onClick={() => swiperRef.current.slideToLoop(index)}
                 className={`w-3 h-3 rounded-full ${index === currentIndex ? "bg-white" : "bg-gray-400/70"
                   }`}
               ></button>
