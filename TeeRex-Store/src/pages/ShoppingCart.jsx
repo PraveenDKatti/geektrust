@@ -12,7 +12,7 @@ export default function Cart({ cart, quantity, getQuantity, removeFromCart }) {
 
 
     return (
-        <div className="flex mx-10 mt-5">
+        <div className="flex m-2 md:m-10">
             <div className="w-[90vw] md:w-2/3 lg:w-2/3 shadow-[0px_0px_4px_0.5px_rgba(0,0,0,0.1)] m-5 p-5">
                 <div className="text-xl md:text-2xl font-semibold"><p>Shopping Cart</p></div>
                 <div className="mt-5 md:mt-10 md:ms-10 md:w-[90%]">

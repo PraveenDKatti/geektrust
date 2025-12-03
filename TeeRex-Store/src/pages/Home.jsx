@@ -51,10 +51,10 @@ export default function Home({filters, getCategory}) {
   }
 
   return (
-    <div className="home-page bg-white p-10">
+    <div className="home-page bg-white m-2 md:m-10">
 
       {/* Hero Banner */}
-      <section className="hero-banner h-[250px] md:h-[350px]">
+      <section className="hero-banner h-[250px] md:h-[400px]">
         <HeroBanner />
       </section>
 

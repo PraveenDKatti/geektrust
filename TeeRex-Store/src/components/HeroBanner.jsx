@@ -24,7 +24,7 @@ export default function App() {
   return (
     <div className="relative w-full md:w-3/4 h-full object-cover mx-auto shadow-lg overflow-hidden">
       {/*Slider for big screens*/}
-      <div className="hidden md:block">
+      <div className="hidden md:block h-full">
         {/* Slider Container for large screens*/}
         <div
           className="flex h-full transition-transform duration-700 ease-in-out"
@@ -70,7 +70,7 @@ export default function App() {
       </div>
 
       {/*Slider for small screens*/}
-      <div className="md:hidden">
+      <div className="md:hidden h-full">
         <Swiper
           className="md:hidden"
           spaceBetween={0}

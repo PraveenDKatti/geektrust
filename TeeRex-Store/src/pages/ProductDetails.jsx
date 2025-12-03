@@ -19,7 +19,7 @@ function ProductDetails({ cart, addToCart, quantity, getQuantity }) {
     return <h1>Loading...</h1>
   else
     return (
-      <div className='px-12'>
+      <div className='m-2 md:m-10'>
         <section className='heroSection grid grid-cols-2 gap-x-[4%] m-4'>
           <div className='productGallery'>
             <div className='productImage h-100 w-full flex justify-center bg-gray-200 rounded-xl'>

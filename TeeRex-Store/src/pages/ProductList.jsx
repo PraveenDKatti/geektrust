@@ -89,7 +89,7 @@ export default function ProductList({ filters, category, addToCart, triggerSearc
     }
 
     return (
-        <div className='productDetails px-4'>
+        <div className='productDetails m-2 md:m-10'>
             <div>
                 <div className='md:hidden h-10 flex items-center m-[2%] rounded bg-gray-100'>
                     <span onClick={updateFilter} className='h-full flex gap-2 items-center justify-center w-1/2 cursor-pointer'>
