@@ -23,7 +23,7 @@ export default function Header({ cartSize, searchTerm, triggerSearch }) {
             </div>
             
             {/* 2. Search Bar (Center) - Removed gradient and set a max width */}
-            <div className="hidden md:block w-full max-w-lg mx-auto mb-3 md:mb-0"> 
+            <div className="hidden md:block w-full max-w-lg bg-gray-100 rounded mx-auto mb-3 md:mb-0"> 
                 <Search triggerSearch={triggerSearch} 
                     searchTerm={searchTerm}/>
             </div>

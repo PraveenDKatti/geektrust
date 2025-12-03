@@ -1,14 +1,11 @@
 import { useState, useEffect } from 'react';
 import Filter from '../components/Filter';
 import Products from '../components/Products';
-import Search from '../components/Search';
 import { FiFilter } from "react-icons/fi";
 import { RxDividerVertical } from "react-icons/rx";
 
-export default function ProductList({ filters, category, addToCart, triggerSearch }) {
+export default function ProductList({ filters, category, addToCart, searchTerm }) {
     const categorizedFilters = Object.keys({...filters[category]}).map(key=>[key,[]])
-
-    const [searchTerm, setSearchTerm] = useState("");
     const [toggleFilter, setToggleFilter] = useState(new Set(["hidden", "md:hidden", "absolute", "left-0", "top-0", "z-40", "h-60", "overflow-auto"]));
     const [product, setProduct] = useState([]);
     const [filter, setFilter] = useState({...Object.fromEntries(categorizedFilters),price:[]});
@@ -75,10 +72,6 @@ export default function ProductList({ filters, category, addToCart, triggerSearc
 
     let productList = triggerFilter();
     const filterClasses = Array.from(toggleFilter).join(" ");
-
-    function triggerSearch(query) {
-        setSearchTerm(query);
-    }
 
     function updateFilter() {
         setToggleFilter((prevToggleFilter) => {
