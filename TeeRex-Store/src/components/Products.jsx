@@ -11,7 +11,7 @@ export default function Products({productList,searchTerm,addToCart}){
         : productList;
     if(displayProducts && displayProducts.length!==0){
         return (
-            <div className="grid gap-5 sm:flex sm:flex-wrap md:gap-10 lg:gap-7">
+            <div className="grid grid-cols-2 gap-5 md:flex md:flex-wrap md:gap-10 lg:gap-7">
                 {
                     displayProducts.map((item) => (
                         <div 
