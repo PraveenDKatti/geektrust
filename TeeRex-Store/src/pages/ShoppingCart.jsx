@@ -41,7 +41,7 @@ export default function Cart({ cart, quantity, getQuantity, removeFromCart }) {
     // --- Full Cart View ---
     return (
         <div className="min-h-screen bg-gray-50 p-4 md:p-8 lg:p-12">
-            <h1 className="text-3xl font-bold text-gray-800 mb-6">My Shopping Cart ({cart.size} Items)</h1>
+            <h1 className="text-2xl font-bold text-gray-800 mb-6">My Shopping Cart ({cart.size} Items)</h1>
             
             <div className="lg:flex lg:gap-8">
                 
