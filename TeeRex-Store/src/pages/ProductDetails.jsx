@@ -20,7 +20,7 @@ function ProductDetails({ cart, addToCart, quantity, getQuantity }) {
   else
     return (
       <div className='m-2 md:m-10'>
-        <section className='heroSection grid grid-cols-2 gap-x-[4%] m-4'>
+        <section className='heroSection grid md:grid-cols-2 gap-x-[4%] m-4'>
           <div className='productGallery'>
             <div className='productImage h-100 w-full flex justify-center bg-gray-200 rounded-xl'>
               <img
@@ -28,11 +28,10 @@ function ProductDetails({ cart, addToCart, quantity, getQuantity }) {
                 src={product.image}
                 alt="product.title" />
             </div>
-            <div className='md:grid grid-cols-5 gap-4 my-4 p-3 rounded-xl bg-gray-200'>
+            <div className='grid grid-cols-5 gap-4 my-4 p-3 rounded-xl bg-gray-200'>
               {
                 [1, 2, 3, 4, 5].map((_, index) => (
                   <img
-                    className='md:h-30'
                     key={index}
                     src={product.image}
                     alt={product.title} />
