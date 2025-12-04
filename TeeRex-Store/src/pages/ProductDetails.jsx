@@ -51,7 +51,7 @@ function ProductDetails({ cart, addToCart, quantity, getQuantity }) {
               <p className='bold text-sm mx-2'>{rating} out of 5</p>
               <p className='text-sm'>(1000 reviews)</p>
             </div>
-            <p>Color: {product.color}</p>
+            <h2 className='text-2xl font-medium'>₹{product.price}</h2>
             <div className='cartBuy my-3'>
               {
                 (!cart.has(product.id)) ?
@@ -78,6 +78,7 @@ function ProductDetails({ cart, addToCart, quantity, getQuantity }) {
                   </div>
               }
             </div>
+            <p>Color: {product.color}</p>
             <div className='productDesc'>
               <h1 className='text-sm font-bold my-3'>Product Description</h1>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
