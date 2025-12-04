@@ -27,7 +27,7 @@ export default function Products({productList,searchTerm,addToCart}){
                                 />
                             </div>
                             <div className="flex items-center mt-2 mx-1 w-[full] justify-between">
-                                <p className="font-bold">Rs {item.price}</p>
+                                <p className="text-sm text-black font-medium">₹{item.price}</p>
                                 <button onClick={()=>addToCart(item)} className=
                                 "p-2 bg-gray-500 hover:bg-black text-sm text-white w-[max] rounded cursor-pointer">
                                 Add to Cart</button>
