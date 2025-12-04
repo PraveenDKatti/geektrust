@@ -7,13 +7,11 @@ import ProductList from "./pages/ProductList"
 import Cart from './pages/ShoppingCart'
 import Home from './pages/Home'
 import ProductDetails from './pages/ProductDetails'
-import {filters} from './components/Filter'
 import Signin from './pages/account/Signin';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null)
-  const [searchTerm, setSearchTerm] = useState("")
   const [cart, setCart] = useState(new Map());
+  const [searchTerm, setSearchTerm] = useState("")
   const [quantity, setQuantity] = useState({});
   const [category, setCategory] = useState(null);
 
@@ -65,26 +63,18 @@ function App() {
     setCategory(newCategory)
   };
 
-  function handleSearch(query) {
+  function triggerSearch(query) {
     setSearchTerm(query);
-  }
-
-  function handleSignin(userData){
-    setCurrentUser(userData)
-  }
-
-  function handleSignout(){
-    setCurrentUser(null)
   }
 
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Layout cartSize={cart.size} searchTerm={searchTerm} triggerSearch={handleSearch}>
+      <Layout cartSize={cart.size} searchTerm={searchTerm} triggerSearch={triggerSearch}>
         <Routes>
-          <Route path='/Signin' element={<Signin handleSignin={handleSignin}/>} />
-          <Route path='/' element={<Home filters={filters} getCategory={getCategory} currentUser={currentUser} handleSignout={handleSignout}/>} />
-          <Route path='/ProductList' element={<ProductList filters={filters} searchTerm={searchTerm} triggerSearch={handleSearch} category={category} addToCart={addToCart} />} />
+          <Route path='/Signin' element={<Signin />}/>
+          <Route path='/' element={<Home getCategory={getCategory} />} />
+          <Route path='/ProductList' element={<ProductList searchTerm={searchTerm} category={category} addToCart={addToCart} />} />
           <Route path="Product/:productId" element={<ProductDetails cart={cart} addToCart={addToCart} quantity={quantity} getQuantity={getQuantity}/>} />
           <Route path='/Cart' element={<Cart cart={cart} quantity={quantity} getQuantity={getQuantity} removeFromCart={removeFromCart} />} />
         </Routes>

@@ -4,6 +4,7 @@ import categories from "../utility/categoryData";
 import DealsBanner from '../assets/DealsBanner.png';
 import { useNavigate } from "react-router-dom";
 import { nanoid } from 'nanoid';
+import { filters } from '../components/Filter'
 
 const numbers = [];
 while (numbers.length < 5) {
@@ -13,15 +14,15 @@ while (numbers.length < 5) {
   }
 }
 
-export default function Home({filters, getCategory}) {
+export default function Home({getCategory}) {
   const [items, setItems] = useState([])
   const [deals, setDeals] = useState([])
-  const [catg, setCatg] = useState([])
+  const [catgList, setCatgList] = useState([])
   const navigate = useNavigate()
 
   useEffect(()=>{
     const keys = Object.keys(filters)
-    setCatg(keys)
+    setCatgList(keys)
     async function fetchData(){
       try {
         const response = await fetch('https://shopping-api-wk52.onrender.com/api/items')
@@ -62,18 +63,18 @@ export default function Home({filters, getCategory}) {
       <section className="categories py-6">
         <h2 className="text-2xl font-bold mb-4">Featured Categories</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-          {catg.map((cat) => (
+          {catgList.map((catg) => (
             <div
               key={nanoid()}
               className="bg-white shadow p-3 rounded hover:shadow-lg cursor-pointer"
-              onClick={()=>handleCategory(cat)}
+              onClick={()=>handleCategory(catg)}
             >
               <img
-                src={categories[cat]}
-                alt={cat}
+                src={categories[catg]}
+                alt={catg}
                 className="w-full h-32 object-cover rounded"
               />
-              <p className="mt-2 text-center font-medium">{cat}</p>
+              <p className="mt-2 text-center font-medium">{catg}</p>
             </div>
           ))}
         </div>

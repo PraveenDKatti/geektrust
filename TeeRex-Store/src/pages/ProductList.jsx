@@ -3,12 +3,19 @@ import Filter from '../components/Filter';
 import Products from '../components/Products';
 import { FiFilter } from "react-icons/fi";
 import { RxDividerVertical } from "react-icons/rx";
+import { filters } from '../components/Filter'
 
-export default function ProductList({ filters, category, addToCart, searchTerm }) {
-    const categorizedFilters = Object.keys({...filters[category]}).map(key=>[key,[]])
+export default function ProductList({ searchTerm, category, addToCart }) {
+
+    // Using main category, Calculate initial filters
+    //Added "|| {}" to prevent errors if category is undefined/null
+    const categorizedFilters = Object.keys({ ...filters[category] } || {}).map(key => [key, []])
+    const initialFilters = { ...Object.fromEntries(categorizedFilters), price: [] };
+
+    const [filter, setFilter] = useState(initialFilters);
+
     const [toggleFilter, setToggleFilter] = useState(new Set(["hidden", "md:hidden", "absolute", "left-0", "top-0", "z-40", "h-60", "overflow-auto"]));
     const [product, setProduct] = useState([]);
-    const [filter, setFilter] = useState({...Object.fromEntries(categorizedFilters),price:[]});
 
     useEffect(() => {
         const getProduct = async () => {
@@ -28,7 +35,7 @@ export default function ProductList({ filters, category, addToCart, searchTerm }
     }, []);
 
     function handleFilters(e, value, key) {
-        setFilter((prevFilters)=>{
+        setFilter((prevFilters) => {
             const newFilters = { ...prevFilters };
             if (e.target.checked) {
                 // Check if the array (value) is already included, avoiding duplicates
@@ -45,11 +52,20 @@ export default function ProductList({ filters, category, addToCart, searchTerm }
                 );
             }
             return newFilters
-        }); 
+        });
     }
 
     function triggerFilter() {
-        let filteredProducts = product.filter((item) => {
+        let filteredProducts = product;
+        //filter based on main category if choosen in home page
+        if (category) {
+            filteredProducts = filteredProducts.filter((item) =>
+                item.category.main?.toLowerCase() === category.toLowerCase());
+        }
+        console.log(filteredProducts)
+
+        //Apply the user-selected checkbox filters on the pre-filtered list
+        filteredProducts = filteredProducts.filter((item) => {
             // Filter based on the selected filters
             return Object.keys(filter).every((key) => {
                 if (filter[key].length > 0) {
@@ -58,13 +74,13 @@ export default function ProductList({ filters, category, addToCart, searchTerm }
                             const [minPrice, maxPrice] = range;
                             return item[key] >= minPrice && item[key] <= (maxPrice ?? Infinity);
                         });
-                    }else if(key === "category"){
-                        const allCategories = Object.values(item[key]).map(i=>i.toLowerCase())
-                        return filter[key].some((i)=>allCategories.includes(i));
+                    } else if (key === "category") {
+                        const allCategories = Object.values(item[key]).map(i => i.toLowerCase())
+                        return filter[key].some((i) => allCategories.includes(i));
                     }
                     return filter[key].includes(item[key].toLowerCase());
                 }
-                return true;
+                return true; // No filters checked for this key, so it passes
             });
         });
         return filteredProducts;

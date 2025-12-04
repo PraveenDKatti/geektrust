@@ -9,7 +9,8 @@ const navgLink = {
     hover: "hover:bg-gray-100 hover:text-teal-600"
 }
 
-export default function Header({ cartSize, searchTerm, triggerSearch }) {
+export default function Header({ cartSize, triggerSearch }) {
+
     return (
         // Sticky, white background, shadow for lift, subtle border-b for separation
         <header className="flex flex-row items-center justify-between bg-white px-6 md:px-10 py-3 md:py-4 z-50 sticky w-full top-0 shadow-md border-b border-gray-100">
@@ -24,8 +25,7 @@ export default function Header({ cartSize, searchTerm, triggerSearch }) {
             
             {/* 2. Search Bar (Center) - Removed gradient and set a max width */}
             <div className="hidden md:block w-full max-w-lg bg-gray-100 rounded mx-auto mb-3 md:mb-0"> 
-                <Search triggerSearch={triggerSearch} 
-                    searchTerm={searchTerm}/>
+                <Search triggerSearch={triggerSearch} />
             </div>
             
             {/* 3. Navigation Links (Right) */}

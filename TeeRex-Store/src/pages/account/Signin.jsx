@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Signin({ setCurrentUser }) {
+export default function Signin() {
 
   function handleSubmit() {
 
