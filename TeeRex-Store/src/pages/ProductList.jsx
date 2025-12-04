@@ -104,7 +104,7 @@ export default function ProductList({ filters, category, addToCart, searchTerm }
                     </div>
                 </div>
             </div>
-            <div className="p-5 md:p-10 flex">
+            <div className="flex px-2">
                 <div className="hidden md:block md:w-1/4">
                     <Filter category={category} handleFilters={handleFilters} />
                 </div>
