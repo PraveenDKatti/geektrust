@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { PiMagnifyingGlassBold } from "react-icons/pi";
+import { useNavigate } from "react-router-dom";
 
 export default function Search({ triggerSearch }) {
     const [inputTerm, setInputTerm] = useState("")
+    const navigate = useNavigate()
 
     function handleSearch(){
-        triggerSearch(inputTerm)
+        triggerSearch(inputTerm.trim())
+        navigate('/ProductList')
         setInputTerm("")
     }
 

@@ -187,6 +187,7 @@ export default function ProductList({ searchTerm, category, addToCart }) {
 
                 {/* display products for all screens */}
                 <div className="w-full md:col-span-3">
+                    {searchTerm && <h2 className='font-medium p-2'>results for "{searchTerm}"</h2>}
                     <Products productList={productList} searchTerm={searchTerm} addToCart={addToCart} />
                 </div>
             </div>
