@@ -14,10 +14,10 @@ const getInitialFilters = (category, allFilters) => {
 
     // Get filter keys from the category-specific filters
     const categorizedFilters = Object.keys(categorySpecificFilters).map(key => [key, []]);
-    
+
     // Create the initial filter state object: e.g., { size: [], color: [], price: [] }
     const initialFilters = { ...Object.fromEntries(categorizedFilters), price: [] };
-    
+
     return initialFilters;
 };
 
@@ -77,7 +77,7 @@ export default function ProductList({ searchTerm, category, addToCart }) {
     // --- Combined Filter and Sort Logic ---
     function triggerFilterAndSort() {
         let filteredProducts = product;
-        
+
         // 1. Filter based on main category
         if (category) {
             filteredProducts = filteredProducts.filter((item) =>
@@ -99,7 +99,7 @@ export default function ProductList({ searchTerm, category, addToCart }) {
                         return filter[key].some((i) => allCategories.includes(i.toLowerCase())); // Ensure filter value is also lowercase
                     }
                     // Generic filter logic for other keys (e.g., size, color)
-                    return filter[key].some(filterValue => 
+                    return filter[key].some(filterValue =>
                         item[key] && item[key].toString().toLowerCase() === filterValue.toString().toLowerCase()
                     );
                 }
@@ -109,13 +109,13 @@ export default function ProductList({ searchTerm, category, addToCart }) {
 
         // 3. Apply sorting logic based on sortType state (FIX)
         const sortedProducts = [...filteredProducts]; // Create a copy to sort
-        
+
         if (sortType === "ascending") {
             sortedProducts.sort((a, b) => a.price - b.price);
         } else if (sortType === "descending") {
             sortedProducts.sort((a, b) => b.price - a.price);
         }
-        
+
         return sortedProducts;
     }
 
@@ -125,7 +125,7 @@ export default function ProductList({ searchTerm, category, addToCart }) {
     // --- Sort Handler (FIX) ---
     function handleSort(selected) {
         // Update the sortType state to trigger a re-render and re-sorting
-        setSortType(selected ? selected.value : null); 
+        setSortType(selected ? selected.value : null);
     }
 
     function updateToggleFilter() {
@@ -138,11 +138,22 @@ export default function ProductList({ searchTerm, category, addToCart }) {
         { value: 'descending', label: 'High to Low' }
     ];
 
+    const customStyles = {
+        control: (provided, state) => ({
+            ...provided,
+            // This removes the border and box-shadow
+            border: 'none',
+            boxShadow: 'none',
+            'text-align': 'center'
+        })
+    }
+
     const SortElement = ({ handleSort }) => (
         <Select
             options={options}
             onChange={handleSort} // Passes the selected option object
             placeholder="Sort"
+            styles={customStyles}
             // Set the value based on sortType state
             value={options.find(option => option.value === sortType)}
             isClearable // Allows clearing the sort selection
@@ -151,10 +162,10 @@ export default function ProductList({ searchTerm, category, addToCart }) {
 
     // --- Render ---
     return (
-        <div className='productDetails m-2 md:m-10'>
+        <div className='productDetails'>
             {/* filter and sort for smallscreens */}
-            <div className='md:hidden relative h-10 flex items-center m-[2%] rounded bg-gray-100'>
-                <span onClick={updateToggleFilter} className='h-full bg-white border border-gray-400 rounded flex gap-2 items-center justify-center w-1/2 cursor-pointer'>
+            <div className='md:hidden relative h-14 mb-2 flex items-center rounded shadow-md'>
+                <span onClick={updateToggleFilter} className='h-full border-none rounded flex gap-2 items-center justify-center w-1/2 cursor-pointer'>
                     Filter
                     <FiFilter className='text-gray-400 text-2xl' />
                 </span>
@@ -169,7 +180,7 @@ export default function ProductList({ searchTerm, category, addToCart }) {
                 }
             </div>
             {/* Products, filter and sort */}
-            <div className="grid md:grid-cols-4 gap-10">
+            <div className="m-2 md:m-10 grid md:grid-cols-4 gap-10">
 
                 {/* filter and sort for big screens */}
                 <div className="hidden md:block shadow-[0px_0px_4px_0.5px_rgba(0,0,0,0.1)] p-5 h-fit">
@@ -187,7 +198,7 @@ export default function ProductList({ searchTerm, category, addToCart }) {
 
                 {/* display products for all screens */}
                 <div className="w-full md:col-span-3">
-                    {searchTerm && <h2 className='font-medium p-2'>results for "{searchTerm}"</h2>}
+                    {searchTerm && <h2 className='hidden md:block font-medium p-2'>results for "{searchTerm}"</h2>}
                     <Products productList={productList} searchTerm={searchTerm} addToCart={addToCart} />
                 </div>
             </div>
