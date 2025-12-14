@@ -8,6 +8,7 @@ import Cart from './pages/ShoppingCart'
 import Home from './pages/Home'
 import ProductDetails from './pages/ProductDetails'
 import Signin from './pages/account/Signin';
+import Checkout from './pages/Checkout';
 
 function App() {
   const [cart, setCart] = useState(new Map());
@@ -77,6 +78,7 @@ function App() {
           <Route path='/ProductList' element={<ProductList searchTerm={searchTerm} category={category} addToCart={addToCart} />} />
           <Route path="Product/:productId" element={<ProductDetails cart={cart} addToCart={addToCart} quantity={quantity} getQuantity={getQuantity}/>} />
           <Route path='/Cart' element={<Cart cart={cart} quantity={quantity} getQuantity={getQuantity} removeFromCart={removeFromCart} />} />
+          <Route path='/Checkout' element={<Checkout cart={cart} quantity={quantity}/>} />
         </Routes>
       </Layout>
     </BrowserRouter>

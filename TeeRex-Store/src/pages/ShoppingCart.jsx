@@ -38,6 +38,10 @@ export default function Cart({ cart, quantity, getQuantity, removeFromCart }) {
         );
     }
 
+    function checkoutOrder(){
+        navigate('/Checkout', { state: { cart: Array.from(cart.values()), total }})
+    }
+
     // --- Full Cart View ---
     return (
         <div className="min-h-screen bg-gray-50 p-4 md:p-8 lg:p-12">
@@ -112,8 +116,6 @@ export default function Cart({ cart, quantity, getQuantity, removeFromCart }) {
                 {/* 💰 Order Summary (Right Column) */}
                 <div className="lg:w-1/3 mt-8 lg:mt-0">
                     <div className="bg-white p-6 rounded-lg shadow-lg sticky top-8 border border-gray-100">
-                        <h2 className="text-xl font-semibold mb-4 border-b pb-2 text-gray-800">Order Summary</h2>
-                        
                         {/* Summary Details Table */}
                         <div className="space-y-3">
                             <div className="flex justify-between text-gray-600">
@@ -145,10 +147,11 @@ export default function Cart({ cart, quantity, getQuantity, removeFromCart }) {
                         </div>
 
                         {/* Order Button */}
-                        <button 
+                        <button
+                            onClick={checkoutOrder} 
                             className="w-full p-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-lg rounded-lg transition duration-200 shadow-lg shadow-indigo-200/50"
                         >
-                            Place Order
+                            Checkout
                         </button>
                         
                         {/* Placeholder for other sections */}
